@@ -1,0 +1,18 @@
+# Build artifacts
+build/
+output/
+
+# Cache (downloaded/extracted sources)
+cache/
+
+# Test artifacts
+test/disks/*.img
+test/results/
+
+# Original ISO (binary blob)
+TinyCoreImage/*.iso
+
+# Editor backups
+*.bak
+*.swp
+*~
