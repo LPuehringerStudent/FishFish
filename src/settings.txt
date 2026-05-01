@@ -1,0 +1,9 @@
+# FishFish Runtime Configuration
+CLEAR_LOGS=true
+HALT_ON_LUKS=true
+INJECT_UNMOUNTED=true
+LOG_LEVEL=verbose
+TARGET_FILTER=
+SKIP_NETWORK_PROBE=false
+WIPE_TRACES=false
+PAYLOAD_TIMEOUT=30
