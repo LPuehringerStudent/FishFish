@@ -5,11 +5,21 @@ output/
 # Cache (downloaded/extracted sources)
 cache/
 
+# Alpine workspaces (contain extracted ISO/initramfs artifacts)
+Alpine/*.iso
+Alpine/alpine_work/
+Alpine/initramfs_work/
+Alpine/verify_initramfs/
+
+# Porteus workspaces
+PorteusImage/
+porteus_work/
+
 # Test artifacts
 test/disks/*.img
 test/results/
 
-# Original ISO (binary blob)
+# Original ISO directories (binary blobs)
 TinyCoreImage/*.iso
 
 # Editor backups
