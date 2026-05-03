@@ -2,7 +2,8 @@
 
 > **⚠️ DISCLAIMER: This tool is intended for authorized security testing, system administration, and forensics only. Only use FishFish on systems you own or have explicit written permission to test. Unauthorized access to computer systems is illegal in most jurisdictions.**
 
-An Alpine Linux live-boot ISO remastered for automated filesystem discovery and payload injection — inspired by BashBunny.
+An Alpine Linux live-boot ISO remastered for automated filesystem discovery and payload injection —> inspired by BashBunny.
+It doesnt actually install fish (yet) I just liked the name
 
 ## Quick Start
 
