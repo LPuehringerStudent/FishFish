@@ -10,7 +10,7 @@ ff_probe_encryption() {
         esac
         for target in "$dev" "$dev"[0-9]* "$dev"p[0-9]*; do
             [ -b "$target" ] || continue
-            magic=$(dd if="$target" bs=1 count=6 2>/dev/null || true)
+            magic=$(timeout 3 dd if="$target" bs=1 count=6 2>/dev/null || true)
             if [ "$magic" = "LUKS%BA%BE" ] || [ "$magic" = "LUKS??" ]; then
                 echo "  LUKS detected on $target"
                 found_enc=1
@@ -19,6 +19,8 @@ ff_probe_encryption() {
     done
     if [ "$found_enc" -eq 0 ]; then
         echo "  No LUKS headers found."
+    else
+        FF_LUKS_FOUND=1
     fi
     echo ""
 }

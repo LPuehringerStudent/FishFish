@@ -2,15 +2,6 @@
 # FishFish Main Orchestrator
 
 FF_BASE="/opt/fishfish"
-FF_LOG="/tmp/fishfish.log"
-
-# Redirect all output to log and console
-exec > >(tee "$FF_LOG" /dev/console) 2>&1
-
-echo "========================================"
-echo " FishFish Boot-time Discovery + Inject"
-echo "========================================"
-echo ""
 
 # Source libraries
 for lib in "$FF_BASE"/lib/*.sh; do
@@ -20,10 +11,12 @@ done
 # Parse settings
 ff_parse_settings
 
-echo "[+] Settings loaded."
+# --- Discovery Phase ---
+echo "========================================"
+echo " FishFish Boot-time Discovery + Inject"
+echo "========================================"
 echo ""
 
-# --- Discovery Phase ---
 ff_probe_block
 ff_probe_encryption
 ff_probe_lvm
@@ -35,6 +28,15 @@ ff_probe_system
 echo ""
 echo "[+] Discovery complete."
 echo ""
+
+# --- Encryption halt check ---
+if [ "$FF_LUKS_FOUND" = "1" ] && [ "$FF_HALT_ON_LUKS" = "true" ]; then
+    echo "[!] HALT: LUKS encryption detected. Aborting injection."
+    echo ""
+    ff_cleanup
+    echo "[+] FishFish finished (halted)."
+    exit 0
+fi
 
 # --- Pre-inject hook ---
 if [ -x "$FF_BASE/hooks/pre-inject.sh" ]; then
