@@ -1,26 +1,31 @@
 # FishFish
 
-A TinyCore Linux live-boot ISO remastered for automated filesystem discovery and payload injection — inspired by BashBunny.
+> **⚠️ DISCLAIMER: This tool is intended for authorized security testing, system administration, and forensics only. Only use FishFish on systems you own or have explicit written permission to test. Unauthorized access to computer systems is illegal in most jurisdictions.**
+
+An Alpine Linux live-boot ISO remastered for automated filesystem discovery and payload injection — inspired by BashBunny.
 
 ## Quick Start
 
 ```bash
-# Build the ISO (first run compiles kernel, subsequent runs are ~30 sec)
+# Build the ISO (~30 sec)
 ./build.sh
 
-# The ISO appears in output/FishFish-<timestamp>.iso
+# The ISO appears in output/FishFish-Alpine-x86_64.iso
+# Test with QEMU before using on real hardware:
+./test/run_test.sh
 ```
 
 ## Project Layout
 
 | Path | Purpose |
 |------|---------|
-| `src/payload.sh` | **Edit this:** runs once per injected filesystem |
-| `src/settings.txt` | **Edit this:** runtime flags (LUKS halt, log cleanup, etc.) |
-| `src/fishfish/` | Core discovery framework (rarely edited) |
-| `build.sh` | Main orchestrator: assembles initrd + ISO |
-| `kernel/config/` | Kernel config fragments |
-| `cache/` | Cached downloads, kernel build artifacts |
+| `src/fishfish/payload.sh` | **Edit this:** runs once per injected filesystem |
+| `src/fishfish/settings.txt` | **Edit this:** runtime flags (LUKS halt, log cleanup, etc.) |
+| `src/fishfish/lib/` | Core discovery + injection libraries |
+| `src/fishfish/main.sh` | Entry point orchestrating discovery → inject → cleanup |
+| `build.sh` | Main orchestrator: assembles initramfs + ISO |
+| `Alpine/` | Alpine Linux initramfs / ISO workspace |
+| `test/` | QEMU test framework with ext4/vfat verification |
 | `output/` | Final bootable ISOs |
 
 ## Payload Contract
@@ -28,7 +33,7 @@ A TinyCore Linux live-boot ISO remastered for automated filesystem discovery and
 `payload.sh` is executed once per successfully mounted target filesystem with these environment variables:
 
 - `FF_MOUNTPOINT` — path where target is mounted
-- `FF_DEVICE` — block device (e.g., `/dev/sda1`)
+- `FF_DEVICE` — block device (e.g., `/dev/sda1`, `/dev/dm-0`)
 - `FF_FSTYPE` — detected filesystem type
 - `FF_UUID` — filesystem UUID
 - `FF_LABEL` — filesystem label
@@ -56,28 +61,44 @@ PAYLOAD_TIMEOUT=30       # seconds per payload execution
 
 ## What Gets Discovered
 
-- Block device topology & partition tables
-- LUKS/dm-crypt headers (hard stop configurable)
-- LVM physical volumes
-- Software RAID (mdadm) signatures
-- Filesystem types (ext4, btrfs, xfs, vfat, ntfs3, exfat, f2fs)
-- btrfs subvolumes, ZFS pool signatures
-- EFI system partitions
-- Init system, architecture, SELinux/AppArmor status
-- Immutable/readonly root detection
-- Network configuration
+- **Block devices**: All `/sys/block/*` and `/sys/class/block/*` devices
+- **Partitions**: Standard partitions (`sdX1`, `nvme0n1p1`, etc.)
+- **LVM**: Physical volumes → logical volumes (auto-activated if `lvm2` available)
+- **MD RAID**: Arrays and signatures (auto-assembled if `mdadm` available)
+- **Device-mapper**: `/dev/dm-*` targets (crypt, multipath, etc.)
+- **Filesystems**: ext2/3/4, btrfs, xfs, vfat, ntfs3, exfat, f2fs
+- **btrfs subvolumes**: Each subvolume mounted and injected individually
+- **ZFS datasets**: Pools and datasets (if `zfs` tools available)
+- **Encryption**: LUKS/dm-crypt headers (hard stop configurable)
+- **System info**: Architecture, kernel, init system, SELinux/AppArmor, immutable root
+- **Network**: Interfaces, routes, DNS (configurable skip)
 
 ## Architecture
 
-- **Kernel**: Custom Linux 6.18.2 with device-mapper, dm-crypt, md-raid, btrfs, xfs built-in.
-- **Initrd**: Remastered TinyCore `core.gz` with FishFish framework + userspace tools.
-- **Boot**: Hooks into `/opt/bootsync.sh` for automatic execution.
+- **Base**: Alpine Linux 3.23.4 x86_64 (standard ISO, kernel 6.18.22-0-lts)
+- **Initramfs**: Remastered Alpine `initramfs-lts` with FishFish framework embedded at `/opt/fishfish/`
+- **Hook**: Runs inside Alpine init, after package installation but before rootfs pivot — ensuring `/sys`, `/dev`, and `/proc` are fully available
+- **Bootloaders**: Syslinux (BIOS) + GRUB2 (UEFI) with expanded driver modules for maximum hardware compatibility
+- **Boot modules**: `loop,squashfs,sd-mod,usb-storage,ahci,virtio-blk,virtio-pci,virtio,nvme,dm-mod,raid0,raid1,raid10,raid456,btrfs,xfs,ntfs3,exfat,f2fs,mmc_block`
+
+## Testing
+
+```bash
+# Create test disks (ext4 + vfat)
+./test/create_disks.sh   # if available, or use manual dd + mkfs
+
+# Run QEMU boot test (~60 sec)
+./test/run_test.sh
+
+# Verify injection markers on test disks
+# Results printed automatically at end of test
+```
 
 ## Requirements
 
-- Linux build host with `gcc`, `make`, `cpio`, `gzip`, `xorriso`, `7z`
-- ~20 GB free disk space for first kernel build
-- ~30 GB RAM recommended for parallel compilation
+- Linux build host with `cpio`, `gzip`, `xorriso`, `7z`
+- ~500 MB free disk space for workspace + ISO output
+- QEMU (optional, for testing)
 
 ## License
 
