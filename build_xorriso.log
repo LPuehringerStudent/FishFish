@@ -1,0 +1,37 @@
+xorriso 1.5.8 : RockRidge filesystem manipulator, libburnia project.
+
+xorriso : NOTE : Loading ISO image tree from LBA 0
+xorriso : UPDATE :     129 nodes read in 1 seconds
+xorriso : NOTE : Detected El-Torito boot information which currently is set to be discarded
+Drive current: -dev 'output/FishFish-Alpine-x86_64.iso'
+Media current: stdio file, overwriteable
+Media status : is written , is appendable
+Boot record  : El Torito , MBR isohybrid cyl-align-on GPT
+Media summary: 1 session, 177664 data blocks,  347m data,  106g free
+Volume id    : 'alpine-std 3.23.4 x86_64'
+xorriso : WARNING : -volid text problematic as automatic mount point name
+xorriso : WARNING : -volid text does not comply to ISO 9660 / ECMA 119 rules
+xorriso : NOTE : Replayed 20 boot related commands
+xorriso : UPDATE :       1 files added in 1 seconds
+Added to ISO image: file '/boot/initramfs-lts'='/home/laurenz/Documents/gitRepos/FishFish/Alpine/alpine_work/boot/initramfs-lts'
+xorriso : UPDATE :       1 files added in 1 seconds
+Added to ISO image: file '/boot/syslinux/syslinux.cfg'='/home/laurenz/Documents/gitRepos/FishFish/Alpine/configs/syslinux.cfg'
+xorriso : UPDATE :       1 files added in 1 seconds
+Added to ISO image: file '/boot/grub/grub.cfg'='/home/laurenz/Documents/gitRepos/FishFish/Alpine/configs/grub.cfg'
+xorriso : WARNING : -volid text does not comply to ISO 9660 / ECMA 119 rules
+xorriso : NOTE : Copying to System Area: 32768 bytes from file '--interval:imported_iso:0s-15s:zero_mbrpt,zero_gpt:output/FishFish-Alpine-x86_64.iso'
+libisofs: NOTE : Aligned image size to cylinder size by 50 blocks
+ISO image produced: 10752 sectors
+Written to medium : 10912 sectors at LBA 177664
+Writing to 'output/FishFish-Alpine-x86_64.iso' completed successfully.
+
+xorriso : NOTE : Re-assessing -outdev 'output/FishFish-Alpine-x86_64.iso'
+xorriso : NOTE : Loading ISO image tree from LBA 0
+xorriso : UPDATE :     129 nodes read in 1 seconds
+xorriso : NOTE : Detected El-Torito boot information which currently is set to be discarded
+Drive current: -dev 'output/FishFish-Alpine-x86_64.iso'
+Media current: stdio file, overwriteable
+Media status : is written , is appendable
+Boot record  : El Torito , MBR isohybrid cyl-align-on GPT
+Media summary: 1 session, 188416 data blocks,  368m data,  106g free
+Volume id    : 'FishFish-Alpine'

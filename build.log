@@ -1,0 +1,28 @@
+========================================
+ FishFish Alpine ISO Builder
+========================================
+
+[+] Copying bootloader configs...
+[+] Building ISO: /home/laurenz/Documents/gitRepos/FishFish/output/FishFish-Alpine-x86_64.iso
+xorriso 1.5.8 : RockRidge filesystem manipulator, libburnia project.
+
+Drive current: -outdev 'stdio:/home/laurenz/Documents/gitRepos/FishFish/output/FishFish-Alpine-x86_64.iso'
+Media current: stdio file, overwriteable
+Media status : is blank
+Media summary: 0 sessions, 0 data blocks, 0 data,  106g free
+xorriso : WARNING : -volid text does not comply to ISO 9660 / ECMA 119 rules
+Added to ISO image: directory '/'='/home/laurenz/Documents/gitRepos/FishFish/Alpine/alpine_work'
+xorriso : UPDATE :     132 files added in 1 seconds
+xorriso : UPDATE :     132 files added in 1 seconds
+xorriso : NOTE : Copying to System Area: 2048 bytes from file '/home/laurenz/Documents/gitRepos/FishFish/Alpine/alpine_work/[BOOT]/1-Boot-NoEmul.img'
+libisofs: NOTE : Aligned image size to cylinder size by 508 blocks
+xorriso : UPDATE :  17.33% done
+ISO image produced: 178688 sectors
+Written to medium : 178688 sectors at LBA 0
+Writing to 'stdio:/home/laurenz/Documents/gitRepos/FishFish/output/FishFish-Alpine-x86_64.iso' completed successfully.
+
+
+[+] ISO built successfully: /home/laurenz/Documents/gitRepos/FishFish/output/FishFish-Alpine-x86_64.iso
+-rw-r--r-- 1 laurenz laurenz 349M  4. Mai 10:31 /home/laurenz/Documents/gitRepos/FishFish/output/FishFish-Alpine-x86_64.iso
+
+========================================
