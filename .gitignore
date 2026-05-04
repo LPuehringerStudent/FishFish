@@ -11,7 +11,7 @@ Alpine/alpine_work/
 Alpine/initramfs_work/
 Alpine/verify_initramfs/
 
-# Porteus workspaces
+# Legacy workspaces
 PorteusImage/
 porteus_work/
 

@@ -2,8 +2,9 @@
 
 > **⚠️ DISCLAIMER: This tool is intended for authorized security testing, system administration, and forensics only. Only use FishFish on systems you own or have explicit written permission to test. Unauthorized access to computer systems is illegal in most jurisdictions.**
 
-An Alpine Linux live-boot ISO remastered for automated filesystem discovery and payload injection —> inspired by BashBunny.
-It doesnt actually install fish (yet) I just liked the name
+An Alpine Linux live-boot ISO remastered for automated filesystem discovery and payload injection.
+
+> It doesn't actually install fish (yet) — I just liked the name.
 
 ## Quick Start
 
@@ -79,8 +80,8 @@ PAYLOAD_TIMEOUT=30       # seconds per payload execution
 - **Base**: Alpine Linux 3.23.4 x86_64 (standard ISO, kernel 6.18.22-0-lts)
 - **Initramfs**: Remastered Alpine `initramfs-lts` with FishFish framework embedded at `/opt/fishfish/`
 - **Hook**: Runs inside Alpine init, after package installation but before rootfs pivot — ensuring `/sys`, `/dev`, and `/proc` are fully available
-- **Bootloaders**: Syslinux (BIOS) + GRUB2 (UEFI) with expanded driver modules for maximum hardware compatibility
-- **Boot modules**: `loop,squashfs,sd-mod,usb-storage,ahci,virtio-blk,virtio-pci,virtio,nvme,dm-mod,raid0,raid1,raid10,raid456,btrfs,xfs,ntfs3,exfat,f2fs,mmc_block`
+- **Bootloaders**: Syslinux (BIOS) + GRUB2 (UEFI)
+- **Boot modules**: `loop,squashfs,sd-mod,usb-storage quiet`
 
 ## Testing
 
